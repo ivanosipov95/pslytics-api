@@ -3,10 +3,10 @@ package db
 import "time"
 
 type Product struct {
-	CreatedAt   time.Time
-	ID          string `gorm:"primary_key"`
-	Name        string
-	ReleaseDate time.Time
+	CreatedAt   time.Time `json:"-"`
+	ID          string    `gorm:"primary_key" json:"id"`
+	Name        string    `json:"name"`
+	ReleaseDate time.Time `json:"release_date"`
 }
 
 type ProductMgr interface {

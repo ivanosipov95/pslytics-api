@@ -3,12 +3,12 @@ package db
 import "time"
 
 type Rate struct {
-	ID        int32 `gorm:"primary_key" sql:"AUTO_INCREMENT"`
-	Date      time.Time
-	ProductID string
-	Product   Product `gorm:"ForeignKey:ProductID"`
-	Total     int64
-	Value     float64
+	ID        int32     `gorm:"primary_key" sql:"AUTO_INCREMENT" json:"-"`
+	Date      time.Time `json:"-"`
+	ProductID string    `json:"-"`
+	Product   Product   `gorm:"ForeignKey:ProductID" json:"-"`
+	Total     int64     `json:"total"`
+	Value     float64   `json:"value"`
 }
 
 type RateMgr interface {

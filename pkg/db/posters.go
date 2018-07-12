@@ -3,11 +3,11 @@ package db
 import "time"
 
 type Poster struct {
-	ID        int32 `gorm:"primary_key" sql:"AUTO_INCREMENT"`
-	CreatedAt time.Time
-	Product   Product `gorm:"ForeignKey:ProductID"`
-	ProductID string
-	URL       string
+	ID        int32     `gorm:"primary_key" sql:"AUTO_INCREMENT"`
+	CreatedAt time.Time `json:"-"`
+	Product   Product   `gorm:"ForeignKey:ProductID" json:"-"`
+	ProductID string    `json:"-"`
+	URL       string    `json:"url"`
 }
 
 type PosterMgr interface {
