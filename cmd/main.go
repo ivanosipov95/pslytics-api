@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/objque/pslytics-api/pkg/api"
 	"github.com/objque/pslytics-api/pkg/config"
 	"github.com/objque/pslytics-api/pkg/db"
 )
@@ -28,4 +29,5 @@ func main() {
 	}
 
 	db.DbMgr = db.NewMainDatabaseMgr()
+	panic(api.StartAPIServer(config.Config.HTTP.IP, config.Config.HTTP.Port))
 }
