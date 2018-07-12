@@ -1,0 +1,16 @@
+http:
+  ip: '127.0.0.1'
+  port: 5110
+
+db:
+  dbtype: 'mysql'
+  dbhost: '127.0.0.1:3306'
+  dbname: 'pslytics-api'
+  dblogin: 'pslytics-api'
+  dbpass: 'pslytics-api'
+  log: false
+
+log:
+  level: DEBUG
+  file: '/var/log/pslytics-api/pslytics-api.log'
+  syslog_enable: true
