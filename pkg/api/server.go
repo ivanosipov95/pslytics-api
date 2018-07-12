@@ -17,9 +17,11 @@ func StartAPIServer(ip string, port int) error {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 
-	// RESTy routes for "articles" resource
+	r.Route("/sales", func(r chi.Router) {
+		r.Get("/", listSales)
+	})
+
 	r.Route("/products", func(r chi.Router) {
-		r.Get("/", listProducts)
 		r.Get("/{id}", getProduct)
 	})
 
