@@ -6,7 +6,6 @@ type Price struct {
 	ID        int64     `gorm:"primary_key" sql:"AUTO_INCREMENT" json:"-"`
 	Date      time.Time `json:"-"`
 	ProductID string    `json:"-"`
-	Product   Product   `gorm:"ForeignKey:ProductID" json:"-"`
 	IsPlus    bool      `json:"is_plus"`
 	Value     int64     `json:"value"`
 }

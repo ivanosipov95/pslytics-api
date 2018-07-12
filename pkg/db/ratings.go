@@ -6,7 +6,6 @@ type Rate struct {
 	ID        int32     `gorm:"primary_key" sql:"AUTO_INCREMENT" json:"-"`
 	Date      time.Time `json:"-"`
 	ProductID string    `json:"-"`
-	Product   Product   `gorm:"ForeignKey:ProductID" json:"-"`
 	Total     int64     `json:"total"`
 	Value     float64   `json:"value"`
 }

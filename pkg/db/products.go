@@ -7,6 +7,9 @@ type Product struct {
 	ID          string    `gorm:"primary_key" json:"id"`
 	Name        string    `json:"name"`
 	ReleaseDate time.Time `json:"release_date"`
+	Rates       []*Rate   `json:"rates"`
+	Posters     []*Poster `json:"posters"`
+	Prices      []*Price  `json:"price"`
 }
 
 type ProductMgr interface {

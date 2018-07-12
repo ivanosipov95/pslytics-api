@@ -3,9 +3,8 @@ package db
 import "time"
 
 type Poster struct {
-	ID        int32     `gorm:"primary_key" sql:"AUTO_INCREMENT"`
+	ID        int32     `gorm:"primary_key" sql:"AUTO_INCREMENT" json:"-"`
 	CreatedAt time.Time `json:"-"`
-	Product   Product   `gorm:"ForeignKey:ProductID" json:"-"`
 	ProductID string    `json:"-"`
 	URL       string    `json:"url"`
 }
