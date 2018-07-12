@@ -1,16 +1,31 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"net/http"
+	"github.com/objque/pslytics-api/pkg/config"
+	"github.com/objque/pslytics-api/pkg/db"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
-}
-
 func main() {
-	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	// TODO (m.kalinin): replace it with a consul or external cfg
+	config.Config = &config.AppConfig{
+		DB: config.DBConfig{
+			DBType:  "mysql",
+			DBHost:  "127.0.0.1",
+			DBLogin: "pslytics",
+			DBPass:  "pslytics",
+			DBName:  "pslytics",
+			Log:     true,
+		},
+		Log: config.LogConfig{
+			File:          "pslytics.log",
+			Level:         "INFO",
+			SyslogEnabled: false,
+		},
+		HTTP: config.HTTPConfig{
+			IP:   "127.0.0.1",
+			Port: 5110,
+		},
+	}
+
+	db.DbMgr = db.NewMainDatabaseMgr()
 }
