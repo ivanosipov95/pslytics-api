@@ -11,7 +11,7 @@ func main() {
 	config.Config = &config.AppConfig{
 		DB: config.DBConfig{
 			DBType:  "mysql",
-			DBHost:  "127.0.0.1",
+			DBHost:  "172.17.0.6",
 			DBLogin: "pslytics",
 			DBPass:  "pslytics",
 			DBName:  "pslytics",
