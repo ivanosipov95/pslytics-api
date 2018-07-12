@@ -22,7 +22,7 @@ func main() {
 			SyslogEnabled: false,
 		},
 		HTTP: config.HTTPConfig{
-			IP:   "127.0.0.1",
+			IP:   "",
 			Port: 5110,
 		},
 	}
