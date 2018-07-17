@@ -11,6 +11,7 @@ func NoOp(db *gorm.DB) error {
 var tables = []interface{}{
 	&Product{},
 	&Price{},
+	&Discount{},
 	&Rate{},
 	&Poster{},
 }
@@ -30,6 +31,9 @@ func CreateAll(db *gorm.DB) error {
 
 	fkeys := map[interface{}][][2]string{
 		Price{}: {
+			{"product_id", "products(id)"},
+		},
+		Discount{}: {
 			{"product_id", "products(id)"},
 		},
 		Rate{}: {

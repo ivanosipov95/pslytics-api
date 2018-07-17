@@ -12,6 +12,7 @@ var DbMgr DataMgr
 type DataMgr interface {
 	ProductMgr
 	PriceMgr
+	DiscountMgr
 	PosterMgr
 	RateMgr
 	Begin() *AppDatabaseMgr

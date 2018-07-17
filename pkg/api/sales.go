@@ -11,53 +11,32 @@ import (
 func listSales(w http.ResponseWriter, r *http.Request) {
 	products := []db.Product{
 		{
-			ID:          "god-of-war",
-			Name:        "God of War",
+			ID:          "EP4139-CUSA01400_00-MAMA02GP40000002",
+			Name:        "Magicka 2: Special Edition",
 			ReleaseDate: time.Now().UTC(),
 			Rates: []*db.Rate{
 				{
-					Total: 100,
-					Value: 4.5,
+					Total: 17,
+					Value: 3.18,
 				},
 			},
 			Posters: []*db.Poster{
 				{
-					URL: "http://cdn.pic/game/url",
+					URL: "https://store.playstation.com/store/api/chihiro/00_09_000/container/RU/ru/19/EP4139-CUSA01400_00-MAMA02GP40000002/1531810662000/image",
 				},
 			},
 			Prices: []*db.Price{
 				{
-					IsPlus: false,
-					Value:  5999,
-				},
-				{
-					IsPlus: true,
-					Value:  3599,
+					Value: 5999,
 				},
 			},
-		}, {
-			ID:          "fifa",
-			Name:        "FIFA18",
-			ReleaseDate: time.Now().UTC(),
-			Rates: []*db.Rate{
+			Discounts: []*db.Discount{
 				{
-					Total: 146,
-					Value: 3.9,
-				},
-			},
-			Posters: []*db.Poster{
-				{
-					URL: "http://cdn.pic/another-game/url",
-				},
-			},
-			Prices: []*db.Price{
-				{
-					IsPlus: false,
-					Value:  6999,
-				},
-				{
-					IsPlus: true,
-					Value:  2500,
+					IsPlus:     true,
+					Value:      1399,
+					Percentage: 64,
+					Since: time.Now().UTC(),
+					Till: time.Now().UTC().Add(time.Hour),
 				},
 			},
 		},

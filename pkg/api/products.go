@@ -3,37 +3,39 @@ package api
 import (
 	"encoding/json"
 	"net/http"
-	"strings"
 	"time"
 
-	"github.com/go-chi/chi"
 	"github.com/objque/pslytics-api/pkg/db"
 )
 
 func getProduct(w http.ResponseWriter, r *http.Request) {
 	body, _ := json.Marshal(db.Product{
-		ID:          chi.URLParam(r, "id"),
-		Name:        strings.ToUpper(chi.URLParam(r, "id")),
+		ID:          "EP4139-CUSA01400_00-MAMA02GP40000002",
+		Name:        "Magicka 2: Special Edition",
 		ReleaseDate: time.Now().UTC(),
 		Rates: []*db.Rate{
 			{
-				Total: 146,
-				Value: 3.9,
+				Total: 17,
+				Value: 3.18,
 			},
 		},
 		Posters: []*db.Poster{
 			{
-				URL: "http://cdn.pic/another-game/url",
+				URL: "https://store.playstation.com/store/api/chihiro/00_09_000/container/RU/ru/19/EP4139-CUSA01400_00-MAMA02GP40000002/1531810662000/image",
 			},
 		},
 		Prices: []*db.Price{
 			{
-				IsPlus: false,
-				Value:  6999,
+				Value: 5999,
 			},
+		},
+		Discounts: []*db.Discount{
 			{
-				IsPlus: true,
-				Value:  2500,
+				IsPlus:     true,
+				Value:      1399,
+				Percentage: 64,
+				Since:      time.Now().UTC(),
+				Till:       time.Now().UTC().Add(time.Hour),
 			},
 		},
 	})
