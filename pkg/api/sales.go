@@ -14,11 +14,9 @@ func listSales(w http.ResponseWriter, r *http.Request) {
 			ID:          "EP4139-CUSA01400_00-MAMA02GP40000002",
 			Name:        "Magicka 2: Special Edition",
 			ReleaseDate: time.Now().UTC(),
-			Rates: []*db.Rate{
-				{
-					Total: 17,
-					Value: 3.18,
-				},
+			Rate: &db.Rate{
+				Total: 17,
+				Value: 3.18,
 			},
 			Poster: "https://store.playstation.com/store/api/chihiro/00_09_000/container/RU/ru/19/EP4139-CUSA01400_00-MAMA02GP40000002/1531810662000/image",
 			Price:  5999,

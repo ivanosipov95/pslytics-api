@@ -9,7 +9,7 @@ type Product struct {
 	Poster      string      `json:"poster"`
 	Price       int64       `json:"price"`
 	ReleaseDate time.Time   `json:"release_date"`
-	Rates       []*Rate     `json:"rates"`
+	Rate        *Rate       `json:"rate"`
 	Discounts   []*Discount `json:"discounts"`
 }
 
