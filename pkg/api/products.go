@@ -12,7 +12,7 @@ func getProduct(w http.ResponseWriter, r *http.Request) {
 	body, _ := json.Marshal(db.Product{
 		ID:          "EP4139-CUSA01400_00-MAMA02GP40000002",
 		Name:        "Magicka 2: Special Edition",
-		ReleaseDate: time.Now().UTC(),
+		Released: time.Now().UTC(),
 		Rate: &db.Rate{
 			Total: 17,
 			Value: 3.18,
