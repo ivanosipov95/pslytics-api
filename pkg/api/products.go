@@ -19,16 +19,8 @@ func getProduct(w http.ResponseWriter, r *http.Request) {
 				Value: 3.18,
 			},
 		},
-		Posters: []*db.Poster{
-			{
-				URL: "https://store.playstation.com/store/api/chihiro/00_09_000/container/RU/ru/19/EP4139-CUSA01400_00-MAMA02GP40000002/1531810662000/image",
-			},
-		},
-		Prices: []*db.Price{
-			{
-				Value: 5999,
-			},
-		},
+		Poster: "https://store.playstation.com/store/api/chihiro/00_09_000/container/RU/ru/19/EP4139-CUSA01400_00-MAMA02GP40000002/1531810662000/image",
+		Price:  5999,
 		Discounts: []*db.Discount{
 			{
 				IsPlus:     true,

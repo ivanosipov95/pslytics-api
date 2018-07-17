@@ -6,10 +6,10 @@ type Product struct {
 	CreatedAt   time.Time   `json:"-"`
 	ID          string      `gorm:"primary_key" json:"id"`
 	Name        string      `json:"name"`
+	Poster      string      `json:"poster"`
+	Price       int64       `json:"price"`
 	ReleaseDate time.Time   `json:"release_date"`
 	Rates       []*Rate     `json:"rates"`
-	Posters     []*Poster   `json:"posters"`
-	Prices      []*Price    `json:"price"`
 	Discounts   []*Discount `json:"discounts"`
 }
 
