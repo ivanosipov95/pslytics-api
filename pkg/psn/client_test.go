@@ -74,7 +74,7 @@ func TestResolve(t *testing.T) {
             "total": 17,
             "score": 3.18
           },
-          "release": "2015-05-26T00:00:00Z",
+          "released": "2015-05-26T00:00:00Z",
           "type": "game",
           "id": "EP4139-CUSA01400_00-MAMA02GP40000002"
         }`))
