@@ -11,9 +11,10 @@ import (
 var Config *AppConfig
 
 type AppConfig struct {
-	DB   DBConfig   `yaml:"db"`
-	Log  LogConfig  `yaml:"log"`
-	HTTP HTTPConfig `yaml:"http"`
+	DB       DBConfig   `yaml:"db"`
+	Log      LogConfig  `yaml:"log"`
+	HTTP     HTTPConfig `yaml:"http"`
+	ProxyURL string     `yaml:"psn-proxy"`
 }
 
 type LogConfig struct {
