@@ -41,6 +41,7 @@ func (mgr *AppDatabaseMgr) GetAllProductsWithActiveDiscounts() ([]*Product, erro
 		Preload("Rate").
 		Preload("Price").
 		Preload("Poster").
+		Limit(50).
 		Find(&products).Error
 }
 
