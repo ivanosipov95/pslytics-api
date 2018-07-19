@@ -26,7 +26,7 @@ func main() {
 			IP:   "",
 			Port: 5110,
 		},
-		ProxyURL: "http://172.17.0.3",
+		ProxyURL: "http://172.17.0.3:3310",
 	}
 
 	db.DbMgr = db.NewMainDatabaseMgr()
