@@ -32,49 +32,30 @@ func TestResolve(t *testing.T) {
 	defer teardown()
 	mux.HandleFunc("/resolve/EP4139-CUSA01400_00-MAMA02GP40000002", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(`{
-          "name": "Magicka 2: Special Edition ",
-          "poster": "https://store.playstation.com/store/api/chihiro/00_09_000/container/RU/ru/19/EP4139-CUSA01400_00-MAMA02GP40000002/1531810662000/image",
-          "prices": {
-            "plus-user": {
-              "discount-percentage": 64,
-              "strikethrough-price": {
-                "display": "RUB 1.399",
-                "value": 139900
-              },
-              "upsell-price": null,
-              "is-plus": false,
-              "availability": {
-                "end-date": "2018-07-25T22:59:00Z",
-                "start-date": "2018-07-11T00:00:00Z"
-              },
-              "actual-price": {
-                "display": "RUB 499",
-                "value": 49900
-              }
-            },
-            "non-plus-user": {
-              "discount-percentage": 64,
-              "strikethrough-price": {
-                "display": "RUB 1.399",
-                "value": 139900
-              },
-              "upsell-price": null,
-              "is-plus": false,
-              "availability": {
-                "end-date": "2018-07-25T22:59:00Z",
-                "start-date": "2018-07-11T00:00:00Z"
-              },
-              "actual-price": {
-                "display": "RUB 499",
-                "value": 49900
-              }
-            }
-          },
-          "score": {
-            "total": 17,
-            "score": 3.18
-          },
           "released": "2015-05-26T00:00:00Z",
+          "rate": {
+            "total": 17,
+            "value": 3.18
+          },
+          "name": "Magicka 2: Special Edition ",
+          "discounts": [
+            {
+              "is_plus": false,
+              "till": "2018-07-25T22:59:00Z",
+              "percentage": 64,
+              "since": "2018-07-11T00:00:00Z",
+              "value": 499
+            },
+            {
+              "is_plus": false,
+              "till": "2018-07-25T22:59:00Z",
+              "percentage": 64,
+              "since": "2018-07-11T00:00:00Z",
+              "value": 499
+            }
+          ],
+          "poster": "https://store.playstation.com/store/api/chihiro/00_09_000/container/RU/ru/19/EP4139-CUSA01400_00-MAMA02GP40000002/1531810662000/image",
+          "price": 1399,
           "type": "game",
           "id": "EP4139-CUSA01400_00-MAMA02GP40000002"
         }`))
@@ -87,4 +68,9 @@ func TestResolve(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "EP4139-CUSA01400_00-MAMA02GP40000002", product.ID)
 	assert.Equal(t, "Magicka 2: Special Edition ", product.Name)
+	assert.Equal(t, int64(1399), product.Price)
+	assert.Len(t, product.Discounts, 2)
+	assert.Equal(t, product.Rate.Value, 3.18)
+	assert.Equal(t, product.Rate.Total, int64(17))
+	assert.Contains(t, product.Poster, product.ID)
 }
