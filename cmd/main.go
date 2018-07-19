@@ -5,6 +5,7 @@ import (
 	"github.com/objque/pslytics-api/pkg/config"
 	"github.com/objque/pslytics-api/pkg/db"
 	"github.com/objque/pslytics-api/pkg/fetcher"
+	"github.com/objque/pslytics-api/pkg/log"
 )
 
 func main() {
@@ -30,7 +31,10 @@ func main() {
 		ProxyURL: "http://172.17.0.3:3310",
 	}
 
+	log.SetLogFormatter(&log.DefaultFormatter)
+	log.ConfigureStdLogger(config.Config.Log.Level)
 	db.DbMgr = db.NewMainDatabaseMgr()
+
 	go fetcher.Run()
 	panic(api.StartAPIServer(config.Config.HTTP.IP, config.Config.HTTP.Port))
 }
