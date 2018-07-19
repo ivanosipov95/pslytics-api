@@ -3,15 +3,16 @@ package db
 import "time"
 
 type Product struct {
-	CreatedAt time.Time   `json:"-"`
-	ID        string      `json:"id" gorm:"primary_key"`
-	Name      string      `json:"name"`
-	PosterURL string      `json:"poster" gorm:"-"`
-	Released  time.Time   `json:"released"`
-	Rate      *Rate       `json:"rate"`
-	Discounts []*Discount `json:"discounts"`
-	Price     Price
-	Poster    Poster
+	CreatedAt  time.Time   `json:"-"`
+	ID         string      `json:"id" gorm:"primary_key"`
+	Name       string      `json:"name"`
+	PosterURL  string      `json:"poster" gorm:"-"`
+	PriceValue int64       `json:"price" gorm:"-"`
+	Released   time.Time   `json:"released"`
+	Rate       *Rate       `json:"rate"`
+	Discounts  []*Discount `json:"discounts"`
+	Price      Price
+	Poster     Poster
 }
 
 type ProductMgr interface {
