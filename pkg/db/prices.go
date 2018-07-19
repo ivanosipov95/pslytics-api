@@ -1,6 +1,9 @@
 package db
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 type Price struct {
 	ID        int64     `gorm:"primary_key" sql:"AUTO_INCREMENT" json:"-"`
@@ -37,4 +40,15 @@ func (mgr *AppDatabaseMgr) EnsurePriceExists(price *Price) error {
 		return nil
 	}
 	return mgr.CreatePrice(price)
+}
+
+func (p *Price) MarshalJSON() ([]byte, error) {
+	return json.Marshal(p.Value)
+}
+
+func (p *Price) UnmarshalJSON(data []byte) error {
+	value := new(int64)
+	json.Unmarshal(data, value)
+	p.Value = *value
+	return nil
 }

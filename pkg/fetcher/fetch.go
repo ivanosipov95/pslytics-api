@@ -26,7 +26,7 @@ func fetch() {
 
 		db.DbMgr.EnsurePosterExists(&db.Poster{
 			ProductID: product.ID,
-			URL:       actual.PosterURL,
+			URL:       actual.Poster.URL,
 		})
 
 		db.DbMgr.EnsureRateExists(&db.Rate{
@@ -39,7 +39,7 @@ func fetch() {
 		db.DbMgr.EnsurePriceExists(&db.Price{
 			Date:      time.Now().UTC(),
 			ProductID: product.ID,
-			Value:     actual.PriceValue,
+			Value:     actual.Price.Value,
 		})
 
 		for _, discount := range actual.Discounts {

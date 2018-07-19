@@ -68,9 +68,9 @@ func TestResolve(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "EP4139-CUSA01400_00-MAMA02GP40000002", product.ID)
 	assert.Equal(t, "Magicka 2: Special Edition ", product.Name)
-	assert.Equal(t, int64(1399), product.PriceValue)
+	assert.Equal(t, int64(1399), product.Price.Value)
 	assert.Len(t, product.Discounts, 2)
 	assert.Equal(t, product.Rate.Value, 3.18)
 	assert.Equal(t, product.Rate.Total, int64(17))
-	assert.Contains(t, product.PosterURL, product.ID)
+	assert.Contains(t, product.Poster.URL, product.ID)
 }
