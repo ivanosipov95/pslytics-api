@@ -1,10 +1,10 @@
 package fetcher
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/objque/pslytics-api/pkg/db"
+	"github.com/objque/pslytics-api/pkg/log"
 	"github.com/objque/pslytics-api/pkg/psn"
 )
 
@@ -12,7 +12,7 @@ func fetch() {
 	// load all products from the db
 	products, err := db.DbMgr.GetAllProducts()
 	if err != nil {
-		fmt.Println("can't load products from the db", err)
+		log.Error("can't load products from the db", err)
 		return
 	}
 
@@ -20,7 +20,7 @@ func fetch() {
 	for _, product := range products {
 		actual, err := psn.Resolve(product.ID)
 		if err != nil {
-			fmt.Println("can't load product via proxy", err)
+			log.Error("can't load product via proxy", err)
 			continue
 		}
 

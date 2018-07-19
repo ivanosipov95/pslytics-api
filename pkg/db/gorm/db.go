@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"sync/atomic"
 
-	"github.com/objque/pslytics-api/pkg/config"
 	"github.com/jinzhu/gorm"
+	"github.com/objque/pslytics-api/pkg/config"
+	"github.com/objque/pslytics-api/pkg/log"
 )
 
 var mainDB *gorm.DB
@@ -58,5 +59,5 @@ type mainDBLogger struct {
 }
 
 func (l mainDBLogger) Println(v ...interface{}) {
-	fmt.Println(v)
+	log.Info(v)
 }
