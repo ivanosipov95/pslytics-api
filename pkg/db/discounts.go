@@ -15,13 +15,30 @@ type Discount struct {
 
 type DiscountMgr interface {
 	CreateDiscount(discount *Discount) error
-	EnsureDiscountExists(discount *Discount) (*Discount, error)
+	GetDiscountForProduct(id string, plus bool) (*Discount, error)
+	EnsureDiscountExists(discount *Discount) error
+}
+
+func (mgr *AppDatabaseMgr) GetDiscountForProduct(id string, plus bool) (*Discount, error) {
+	discount := Discount{}
+	if err := mgr.db.Where("product_id = ? and is_plus = ?", id, plus).Last(&discount).Error; err != nil {
+		return nil, err
+	}
+	return &discount, nil
 }
 
 func (mgr *AppDatabaseMgr) CreateDiscount(discount *Discount) error {
-	panic("not implemented")
+	return mgr.db.Create(discount).Error
 }
 
-func (mgr *AppDatabaseMgr) EnsureDiscountExists(discount *Discount) (*Discount, error) {
-	panic("not implemented")
+func (mgr *AppDatabaseMgr) EnsureDiscountExists(discount *Discount) error {
+	dbDiscount, err := mgr.GetDiscountForProduct(discount.ProductID, discount.IsPlus)
+	if err != nil {
+		return mgr.CreateDiscount(discount)
+	}
+
+	if dbDiscount.Value == discount.Value {
+		return nil
+	}
+	return mgr.CreateDiscount(discount)
 }

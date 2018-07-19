@@ -11,13 +11,30 @@ type Price struct {
 
 type PriceMgr interface {
 	CreatePrice(price *Price) error
-	EnsurePriceExists(price *Price) (*Price, error)
+	GetPriceForProduct(id string) (*Price, error)
+	EnsurePriceExists(price *Price) error
+}
+
+func (mgr *AppDatabaseMgr) GetPriceForProduct(id string) (*Price, error) {
+	price := Price{}
+	if err := mgr.db.Where("product_id = ?", id).Last(&price).Error; err != nil {
+		return nil, err
+	}
+	return &price, nil
 }
 
 func (mgr *AppDatabaseMgr) CreatePrice(price *Price) error {
-	panic("not implemented")
+	return mgr.db.Create(price).Error
 }
 
-func (mgr *AppDatabaseMgr) EnsurePriceExists(price *Price) (*Price, error) {
-	panic("not implemented")
+func (mgr *AppDatabaseMgr) EnsurePriceExists(price *Price) error {
+	dbPrice, err := mgr.GetPriceForProduct(price.ProductID)
+	if err != nil {
+		return mgr.CreatePrice(price)
+	}
+
+	if price.Value == dbPrice.Value {
+		return nil
+	}
+	return mgr.CreatePrice(price)
 }

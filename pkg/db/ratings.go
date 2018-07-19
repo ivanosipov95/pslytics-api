@@ -12,13 +12,36 @@ type Rate struct {
 
 type RateMgr interface {
 	CreateRate(rate *Rate) error
-	EnsureRateExists(rate *Rate) (*Rate, error)
+	GetRateForProduct(id string) (*Rate, error)
+	EnsureRateExists(rate *Rate) error
+}
+
+func (mgr *AppDatabaseMgr) GetRateForProduct(id string) (*Rate, error) {
+	rate := Rate{}
+	if err := mgr.db.Where("product_id = ?", id).Last(&rate).Error; err != nil {
+		return nil, err
+	}
+	return &rate, nil
 }
 
 func (mgr *AppDatabaseMgr) CreateRate(rate *Rate) error {
-	panic("not implemented")
+	return mgr.db.Create(rate).Error
 }
 
-func (mgr *AppDatabaseMgr) EnsureRateExists(rate *Rate) (*Rate, error) {
-	panic("not implemented")
+func (mgr *AppDatabaseMgr) EnsureRateExists(rate *Rate) error {
+	dbRate, err := mgr.GetRateForProduct(rate.ProductID)
+	if err != nil {
+		// for newest games
+		return mgr.CreateRate(rate)
+	}
+
+	// rating was already saved for today
+	if dbRate.Date.After(time.Now().Truncate(time.Hour * 24)) {
+		mgr.db.Where("id = ", dbRate.ID).Updates(map[string]interface{}{
+			"total": rate.Total,
+			"value": rate.Value,
+		})
+		return nil
+	}
+	return mgr.CreateRate(rate)
 }
