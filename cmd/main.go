@@ -16,7 +16,7 @@ func main() {
 			DBLogin: "root",
 			DBPass:  "pslytics",
 			DBName:  "pslytics",
-			Log:     true,
+			Log:     false,
 		},
 		Log: config.LogConfig{
 			File:          "pslytics.log",
