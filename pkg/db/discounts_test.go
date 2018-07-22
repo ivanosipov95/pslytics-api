@@ -7,6 +7,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func timePointer(time time.Time) *time.Time {
+	return &time
+}
+
 func TestDB_Discounts_Get(t *testing.T) {
 	setup()
 	defer teardown()
@@ -29,8 +33,8 @@ func TestDB_Discounts_EnsureExists(t *testing.T) {
 		IsPlus:     false,
 		Value:      1000,
 		Percentage: 50,
-		Since:      time.Now().UTC(),
-		Till:       time.Now().UTC().Add(time.Hour * 24),
+		Since:      timePointer(time.Now().UTC()),
+		Till:       timePointer(time.Now().UTC().Add(time.Hour * 24)),
 	})
 
 	// assert
@@ -52,8 +56,8 @@ func TestDB_Discounts_EnsureNotExists(t *testing.T) {
 		IsPlus:     false,
 		Value:      1000,
 		Percentage: 50,
-		Since:      time.Now().UTC(),
-		Till:       time.Now().UTC().Add(time.Hour * 24),
+		Since:      timePointer(time.Now().UTC()),
+		Till:       timePointer(time.Now().UTC().Add(time.Hour * 24)),
 	})
 
 	// assert

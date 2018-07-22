@@ -26,7 +26,7 @@ func teardown() {
 	server.Close()
 }
 
-func TestResolve(t *testing.T) {
+func TestClient_Resolve(t *testing.T) {
 	// arrange
 	setup()
 	defer teardown()
@@ -40,15 +40,15 @@ func TestResolve(t *testing.T) {
           "name": "Magicka 2: Special Edition ",
           "discounts": [
             {
-              "is_plus": false,
-              "till": "2018-07-25T22:59:00Z",
+              "is_plus": true,
+              "till": null,
               "percentage": 64,
               "since": "2018-07-11T00:00:00Z",
               "value": 499
             },
             {
               "is_plus": false,
-              "till": "2018-07-25T22:59:00Z",
+              "till": null,
               "percentage": 64,
               "since": "2018-07-11T00:00:00Z",
               "value": 499
@@ -69,8 +69,10 @@ func TestResolve(t *testing.T) {
 	assert.Equal(t, "EP4139-CUSA01400_00-MAMA02GP40000002", product.ID)
 	assert.Equal(t, "Magicka 2: Special Edition ", product.Name)
 	assert.Equal(t, int64(1399), product.Price.Value)
-	assert.Len(t, product.Discounts, 2)
 	assert.Equal(t, product.Rate.Value, 3.18)
 	assert.Equal(t, product.Rate.Total, int64(17))
 	assert.Contains(t, product.Poster.URL, product.ID)
+	assert.Len(t, product.Discounts, 2)
+	assert.Nil(t, product.Discounts[0].Till)
+	assert.Nil(t, product.Discounts[1].Till)
 }
