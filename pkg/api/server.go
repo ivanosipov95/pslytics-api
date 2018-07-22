@@ -25,6 +25,7 @@ func StartAPIServer(ip string, port int) error {
 
 	r.Route("/products", func(r chi.Router) {
 		r.Get("/{id}", getProduct)
+		r.Post("/search", searchProduct)
 	})
 
 	return http.ListenAndServe(fmt.Sprintf("%s:%d", ip, port), r)
