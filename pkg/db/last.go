@@ -28,5 +28,7 @@ func (mgr *AppDatabaseMgr) SetLastFetch(time time.Time) error {
 			Date: time,
 		}).Error
 	}
-	return mgr.db.Model(last).Update("date", time).Error
+
+	last.Date = time
+	return mgr.db.Save(last).Error
 }
