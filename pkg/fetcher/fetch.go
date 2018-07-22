@@ -72,6 +72,7 @@ func Run() {
 			if err := fetch(); err != nil {
 				log.Error(err)
 			} else {
+				log.Infof("Finish fetching stage '%s'...", time.Now().UTC().String())
 				db.DbMgr.SetLastFetch(now)
 			}
 		}
