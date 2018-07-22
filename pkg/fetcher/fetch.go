@@ -22,30 +22,38 @@ func fetch() error {
 	for _, product := range products {
 		actual, err := psn.Resolve(product.ID)
 		if err != nil {
-			return errors.Wrap(err, "can't load product via proxy")
+			return errors.Wrapf(err, "can't load product '%s' via proxy", product.ID)
 		}
 
-		db.DbMgr.EnsurePosterExists(&db.Poster{
+		if err := db.DbMgr.EnsurePosterExists(&db.Poster{
 			ProductID: product.ID,
 			URL:       actual.Poster.URL,
-		})
+		}); err != nil {
+			log.Error("#1", err)
+		}
 
-		db.DbMgr.EnsureRateExists(&db.Rate{
+		if err := db.DbMgr.EnsureRateExists(&db.Rate{
 			Date:      time.Now().UTC(),
 			ProductID: product.ID,
 			Total:     actual.Rate.Total,
 			Value:     actual.Rate.Value,
-		})
+		}); err != nil {
+			log.Error("#2", err)
+		}
 
-		db.DbMgr.EnsurePriceExists(&db.Price{
+		if err := db.DbMgr.EnsurePriceExists(&db.Price{
 			Date:      time.Now().UTC(),
 			ProductID: product.ID,
 			Value:     actual.Price.Value,
-		})
+		}); err != nil {
+			log.Error("#3", err)
+		}
 
 		for _, discount := range actual.Discounts {
 			discount.ProductID = product.ID
-			db.DbMgr.EnsureDiscountExists(discount)
+			if err := db.DbMgr.EnsureDiscountExists(discount); err != nil {
+				log.Error("#4", err)
+			}
 		}
 	}
 	return nil
