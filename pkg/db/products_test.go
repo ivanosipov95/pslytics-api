@@ -129,3 +129,83 @@ func TestDB_Products_Get_FilterBy_ID(t *testing.T) {
 		assert.Equal(t, "kek", disc.ProductID)
 	}
 }
+
+func TestDB_Products_SearchProductsByName(t *testing.T) {
+	setup()
+	defer teardown()
+
+	// arrange
+	DbMgr.CreateProduct(&Product{
+		ID:   "EP4064-CUSA01857_00-THEESCAPISTS0000",
+		Name: "the Escapists",
+	})
+	DbMgr.CreateProduct(&Product{
+		ID:   "EP9000-CUSA00176_00-DEADNATIONGAME01",
+		Name: "Dead Nation",
+	})
+	DbMgr.CreateProduct(&Product{
+		ID:   "EP2034-CUSA03952_00-NOMANSSKYHG00001",
+		Name: "No Man's Sky",
+	})
+
+	// action
+	products, err := DbMgr.SearchProductsByName("dead nation")
+
+	// assert
+	assert.NoError(t, err)
+	assert.Len(t, products, 1)
+	assert.Equal(t, "EP9000-CUSA00176_00-DEADNATIONGAME01", products[0].ID)
+	assert.Equal(t, "Dead Nation", products[0].Name)
+}
+
+func TestDB_Products_SearchProductsByName_Nothing(t *testing.T) {
+	setup()
+	defer teardown()
+
+	// arrange
+	DbMgr.CreateProduct(&Product{
+		ID:   "EP4064-CUSA01857_00-THEESCAPISTS0000",
+		Name: "the Escapists",
+	})
+	DbMgr.CreateProduct(&Product{
+		ID:   "EP9000-CUSA00176_00-DEADNATIONGAME01",
+		Name: "Dead Nation",
+	})
+	DbMgr.CreateProduct(&Product{
+		ID:   "EP2034-CUSA03952_00-NOMANSSKYHG00001",
+		Name: "No Man's Sky",
+	})
+
+	// action
+	products, err := DbMgr.SearchProductsByName("god of war') --")
+
+	// assert
+	assert.NoError(t, err)
+	assert.Len(t, products, 0)
+}
+
+func TestDB_Products_SearchProductsByName_SQL_Injection(t *testing.T) {
+	setup()
+	defer teardown()
+
+	// arrange
+	DbMgr.CreateProduct(&Product{
+		ID:   "EP4064-CUSA01857_00-THEESCAPISTS0000",
+		Name: "the Escapists",
+	})
+	DbMgr.CreateProduct(&Product{
+		ID:   "EP9000-CUSA00176_00-DEADNATIONGAME01",
+		Name: "Dead Nation",
+	})
+	DbMgr.CreateProduct(&Product{
+		ID:   "EP2034-CUSA03952_00-NOMANSSKYHG00001",
+		Name: "No Man's Sky",
+	})
+
+	// action
+	products, err := DbMgr.SearchProductsByName(`god of war'" -- broken sql`)
+
+	// assert
+	assert.NoError(t, err)
+	assert.Len(t, products, 0)
+}
