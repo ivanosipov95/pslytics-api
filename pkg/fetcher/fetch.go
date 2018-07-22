@@ -22,7 +22,8 @@ func fetch() error {
 	for _, product := range products {
 		actual, err := psn.Resolve(product.ID)
 		if err != nil {
-			return errors.Wrap(err, "can't load product via proxy")
+			log.Error(errors.Wrapf(err, "can't load product '%s' via proxy", product.ID))
+			continue
 		}
 
 		db.DbMgr.EnsurePosterExists(&db.Poster{
