@@ -91,3 +91,45 @@ func TestFetcher_Fetch(t *testing.T) {
 	assert.False(t, discount.IsPlus)
 	assert.Equal(t, int64(64), discount.Percentage)
 }
+
+func TestFetcher_Internal_IsMustFetch_FirstRun(t *testing.T) {
+	// first run means that no records in last_fetches
+	setup()
+	defer teardown()
+
+	// action
+	must := isMustFetch()
+
+	// assert
+	assert.True(t, must)
+}
+
+func TestFetcher_Internal_IsMustFetch_ReloadApp_AfterFetching(t *testing.T) {
+	// fetch was successful and someone restart the app
+	setup()
+	defer teardown()
+
+	// arrange
+	db.DbMgr.SetLastFetch(time.Now().UTC())
+
+	// action
+	must := isMustFetch()
+
+	// assert
+	assert.False(t, must)
+}
+
+func TestFetcher_Internal_IsMustFetch_ReloadApp_AfterOldestFetching(t *testing.T) {
+	// fetch was successful some times ago and someone restart the app
+	setup()
+	defer teardown()
+
+	// arrange
+	db.DbMgr.SetLastFetch(time.Now().UTC().Truncate(time.Hour * 48))
+
+	// action
+	must := isMustFetch()
+
+	// assert
+	assert.True(t, must)
+}

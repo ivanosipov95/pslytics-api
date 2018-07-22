@@ -15,6 +15,7 @@ type AppConfig struct {
 	Log      LogConfig  `yaml:"log"`
 	HTTP     HTTPConfig `yaml:"http"`
 	ProxyURL string     `yaml:"psn-proxy"`
+	Fetching Fetching   `yaml:"fetching"`
 }
 
 type LogConfig struct {
@@ -35,6 +36,10 @@ type DBConfig struct {
 type HTTPConfig struct {
 	IP   string
 	Port int
+}
+
+type Fetching struct {
+	CountOfSkippedHoursToFetch float64
 }
 
 func InitConfig(filepath string) error {
