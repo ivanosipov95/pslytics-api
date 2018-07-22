@@ -37,10 +37,9 @@ func (mgr *AppDatabaseMgr) EnsureRateExists(rate *Rate) error {
 
 	// rating was already saved for today
 	if dbRate.Date.After(time.Now().Truncate(time.Hour * 24)) {
-		mgr.db.Where("id = ", dbRate.ID).Updates(map[string]interface{}{
-			"total": rate.Total,
-			"value": rate.Value,
-		})
+		dbRate.Total = rate.Total
+		dbRate.Value = rate.Value
+		mgr.db.Save(dbRate)
 		return nil
 	}
 	return mgr.CreateRate(rate)
