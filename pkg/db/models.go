@@ -14,6 +14,7 @@ var tables = []interface{}{
 	&Discount{},
 	&Rate{},
 	&Poster{},
+	&LastFetch{},
 }
 
 func CreateTables(db *gorm.DB) error {

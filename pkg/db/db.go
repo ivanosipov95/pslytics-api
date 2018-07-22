@@ -15,6 +15,7 @@ type DataMgr interface {
 	DiscountMgr
 	PosterMgr
 	RateMgr
+	LastFetchMgr
 	Begin() *AppDatabaseMgr
 	Commit() *AppDatabaseMgr
 	Rollback() *AppDatabaseMgr
