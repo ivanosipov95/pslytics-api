@@ -14,11 +14,11 @@ type LastFetchMgr interface {
 }
 
 func (mgr *AppDatabaseMgr) GetLastFetch() (*LastFetch, error) {
-	poster := LastFetch{}
-	if err := mgr.db.Last(&poster).Error; err != nil {
+	last := LastFetch{}
+	if err := mgr.db.Last(&last).Error; err != nil {
 		return nil, err
 	}
-	return &poster, nil
+	return &last, nil
 }
 
 func (mgr *AppDatabaseMgr) SetLastFetch(time time.Time) error {
