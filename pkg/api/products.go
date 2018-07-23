@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm"
 	"github.com/objque/pslytics-api/pkg/db"
 	"github.com/objque/pslytics-api/pkg/log"
 	"github.com/pkg/errors"
@@ -13,6 +14,11 @@ import (
 func getProduct(w http.ResponseWriter, r *http.Request) {
 	product, err := db.DbMgr.GetProductByID(chi.URLParam(r, "id"))
 	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+
 		RaiseInternalIfError(err)
 	}
 
