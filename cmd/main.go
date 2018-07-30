@@ -4,7 +4,6 @@ import (
 	"github.com/objque/pslytics-api/pkg/api"
 	"github.com/objque/pslytics-api/pkg/config"
 	"github.com/objque/pslytics-api/pkg/db"
-	"github.com/objque/pslytics-api/pkg/fetcher"
 	"github.com/objque/pslytics-api/pkg/log"
 )
 
@@ -38,6 +37,6 @@ func main() {
 	log.ConfigureStdLogger(config.Config.Log.Level)
 	db.DbMgr = db.NewMainDatabaseMgr()
 
-	go fetcher.Run()
+	// go fetcher.Run()
 	panic(api.StartAPIServer(config.Config.HTTP.IP, config.Config.HTTP.Port))
 }
